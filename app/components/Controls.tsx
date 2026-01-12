@@ -46,18 +46,29 @@ export function Controls({
 
   return (
     <div
-      className="w-full border-b border-red-900/40 px-4 py-6 text-base text-red-50 lg:w-auto lg:min-w-[220px] lg:border-b-0 lg:border-r lg:px-6 lg:py-8 lg:h-full"
-      style={{ backgroundColor: "#181818" }}
+      className="w-full border-b px-4 py-6 text-base lg:w-auto lg:min-w-[220px] lg:border-b-0 lg:border-r lg:px-6 lg:py-8 lg:h-full"
+      style={{
+        backgroundColor: "#1A1D22",
+        color: "#E5E7EB",
+        borderColor: "#2A2F36",
+      }}
     >
       <div className="space-y-2 lg:space-y-4">
-        <div className="text-sm font-semibold uppercase tracking-wide text-red-200/80">
+        <div
+          className="text-sm font-semibold uppercase tracking-wide"
+          style={{ color: "#E5E7EB" }}
+        >
           Prisområde
         </div>
         <div className="flex flex-wrap gap-2 lg:flex-col lg:gap-2">
-          <label className="flex cursor-pointer items-center gap-2 text-red-50">
+          <label
+            className="flex cursor-pointer items-center gap-2"
+            style={{ color: "#E5E7EB" }}
+          >
             <input
               type="checkbox"
-              className="h-4 w-4 rounded border-red-400 bg-red-900 accent-red-600 lg:h-5 lg:w-5"
+              className="h-4 w-4 rounded lg:h-5 lg:w-5"
+              style={{ accentColor: "#9AA3AD" }}
               checked={allSelected}
               onChange={toggleAll}
             />
@@ -66,11 +77,13 @@ export function Controls({
           {PRICE_AREAS.map((area) => (
             <label
               key={area}
-              className="flex cursor-pointer items-center gap-2 text-red-50"
+              className="flex cursor-pointer items-center gap-2"
+              style={{ color: "#E5E7EB" }}
             >
               <input
                 type="checkbox"
-                className="h-4 w-4 rounded border-red-400 bg-red-900 accent-red-600 lg:h-5 lg:w-5"
+                className="h-4 w-4 rounded lg:h-5 lg:w-5"
+                style={{ accentColor: "#9AA3AD" }}
                 checked={selectedAreas.includes(area)}
                 onChange={() => toggleArea(area)}
               />
@@ -81,26 +94,45 @@ export function Controls({
       </div>
 
       <div className="mt-8 space-y-3 lg:mt-12">
-        <div className="text-sm font-semibold uppercase tracking-wide text-red-200/80">
+        <div
+          className="text-sm font-semibold uppercase tracking-wide"
+          style={{ color: "#E5E7EB" }}
+        >
           Bruksdøgn
         </div>
         <div className="space-y-2">
           <div className="flex flex-col gap-1">
-            <span className="text-sm text-red-200/80">Fra</span>
+            <span className="text-sm" style={{ color: "#E5E7EB" }}>
+              Fra
+            </span>
             <input
               type="date"
               value={startDate ?? ""}
               onChange={(e) => onChangeStartDate(e.target.value || undefined)}
-              className="w-full rounded border border-red-700 bg-red-900 px-2 py-1.5 text-sm text-red-50 outline-none ring-red-400 focus:ring-2"
+              className="w-full rounded px-2 py-1.5 text-sm outline-none focus:ring-2"
+              style={{
+                borderColor: "#2A2F36",
+                backgroundColor: "#121417",
+                color: "#E5E7EB",
+                borderWidth: "1px",
+              }}
             />
           </div>
           <div className="flex flex-col gap-1">
-            <span className="text-sm text-red-200/80">Til</span>
+            <span className="text-sm" style={{ color: "#E5E7EB" }}>
+              Til
+            </span>
             <input
               type="date"
               value={endDate ?? ""}
               onChange={(e) => onChangeEndDate(e.target.value || undefined)}
-              className="w-full rounded border border-red-700 bg-red-900 px-2 py-1.5 text-sm text-red-50 outline-none ring-red-400 focus:ring-2"
+              className="w-full rounded px-2 py-1.5 text-sm outline-none focus:ring-2"
+              style={{
+                borderColor: "#2A2F36",
+                backgroundColor: "#121417",
+                color: "#E5E7EB",
+                borderWidth: "1px",
+              }}
             />
           </div>
         </div>

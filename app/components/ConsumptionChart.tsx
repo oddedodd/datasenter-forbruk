@@ -14,11 +14,11 @@ import type { DailyAreaData } from "../lib/types";
 import type { PriceArea } from "./Controls";
 
 const AREA_COLORS: Record<PriceArea, string> = {
-  NO1: "#1d4ed8",
-  NO2: "#16a34a",
-  NO3: "#8b5cf6",
-  NO4: "#a855f7",
-  NO5: "#0ea5e9",
+  NO1: "#4F7CFF",
+  NO2: "#4CB8A0",
+  NO3: "#A78BFA",
+  NO4: "#F5B971",
+  NO5: "#5AC8FA",
 };
 
 interface Props {
@@ -51,7 +51,7 @@ export function ConsumptionChart({ data, activeAreas }: Props) {
       <text
         x={viewBox.x - 45}
         y={viewBox.y + viewBox.height / 2}
-        fill="#6b7280"
+        fill="#9AA3AD"
         fontSize={14}
         textAnchor="middle"
         transform={`rotate(-90 ${viewBox.x - 45} ${
@@ -74,34 +74,39 @@ export function ConsumptionChart({ data, activeAreas }: Props) {
   };
 
   return (
-    <div className="h-[400px] w-full rounded-xl border border-gray-600 bg-white px-2 py-4 shadow-sm sm:h-[480px] sm:px-4">
+    <div
+      className="h-[400px] w-full rounded-xl border px-2 py-4 shadow-sm sm:h-[480px] sm:px-4"
+      style={{ backgroundColor: "#1A1D22", borderColor: "#2A2F36" }}
+    >
       <div style={{ width: "100%", height: "100%", minWidth: 0, minHeight: 0 }}>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={data}
             margin={{ top: 16, right: 16, left: 80, bottom: 8 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#2A2F36" />
             <XAxis
               dataKey="date"
               tickMargin={8}
               tickLine={false}
-              axisLine={{ stroke: "#d1d5db" }}
+              axisLine={{ stroke: "#2A2F36" }}
               ticks={yearTickDates}
               tickFormatter={(value: string) => {
                 return new Date(value).getFullYear().toString();
               }}
               fontSize={14}
+              tick={{ fill: "#9AA3AD" }}
             />
             <YAxis
               tickMargin={8}
               tickLine={false}
-              axisLine={{ stroke: "#d1d5db" }}
+              axisLine={{ stroke: "#2A2F36" }}
               tickFormatter={(v) =>
                 (v / 1000).toLocaleString("nb-NO", { maximumFractionDigits: 0 })
               }
               width={60}
               fontSize={14}
+              tick={{ fill: "#9AA3AD" }}
               label={<YAxisLabel />}
             />
             <Tooltip
@@ -113,11 +118,21 @@ export function ConsumptionChart({ data, activeAreas }: Props) {
                   : value
               }
               labelFormatter={(label) => `Dato: ${formatNorwegianDate(label)}`}
-              contentStyle={{ fontSize: "14px" }}
-              labelStyle={{ color: "#000000" }}
+              contentStyle={{
+                fontSize: "14px",
+                backgroundColor: "#0F172A",
+                border: "1px solid #2A3340",
+                borderRadius: "8px",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.45)",
+              }}
+              labelStyle={{ color: "#E5E7EB" }}
             />
             <Legend
-              wrapperStyle={{ fontSize: "14px", paddingTop: "8px" }}
+              wrapperStyle={{
+                fontSize: "14px",
+                paddingTop: "8px",
+                color: "#E5E7EB",
+              }}
               iconSize={14}
             />
             {activeAreas.map((area) => (
@@ -127,7 +142,7 @@ export function ConsumptionChart({ data, activeAreas }: Props) {
                 dataKey={area}
                 stroke={AREA_COLORS[area]}
                 dot={false}
-                strokeWidth={2}
+                strokeWidth={2.5}
                 isAnimationActive={false}
               />
             ))}

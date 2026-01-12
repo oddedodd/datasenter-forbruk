@@ -23,14 +23,14 @@ export function Dashboard({ dailySeries }: Props) {
   );
 
   return (
-    <div className="flex min-h-screen flex-col text-slate-100 lg:flex-row" style={{ backgroundColor: '#212121' }}>
+    <div className="flex min-h-screen flex-col lg:flex-row" style={{ backgroundColor: '#121417', color: '#E5E7EB' }}>
       <main className="order-1 flex flex-1 flex-col gap-4 px-4 py-4 sm:gap-6 sm:px-6 md:px-8 md:py-8 lg:order-2">
         <header className="flex flex-col gap-3">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-slate-100 sm:text-3xl">
+            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl" style={{ color: '#E5E7EB' }}>
               Strømforbruk i datasentre pr. døgn og prisområde
             </h1>
-            <p className="mt-1 text-sm text-slate-400 sm:text-base">
+            <p className="mt-1 text-sm sm:text-base" style={{ color: '#E5E7EB' }}>
               Daglig forbruk per prisområde (kWh).
             </p>
           </div>
