@@ -44,12 +44,31 @@ export function ConsumptionChart({ data, activeAreas }: Props) {
   // Create a set for quick lookup
   const yearChangeDates = new Set(yearTickDates);
 
+  // Custom Y-axis label component
+  const YAxisLabel = ({ viewBox }: any) => {
+    if (!viewBox) return null;
+    return (
+      <text
+        x={viewBox.x - 45}
+        y={viewBox.y + viewBox.height / 2}
+        fill="#6b7280"
+        fontSize={14}
+        textAnchor="middle"
+        transform={`rotate(-90 ${viewBox.x - 45} ${
+          viewBox.y + viewBox.height / 2
+        })`}
+      >
+        Forbruk (MWh)
+      </text>
+    );
+  };
+
   return (
-    <div className="h-[480px] w-full rounded-xl border border-emerald-100 bg-white px-4 py-4 shadow-sm">
+    <div className="h-[400px] w-full rounded-xl border border-red-100 bg-white px-2 py-4 shadow-sm sm:h-[480px] sm:px-4">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data}
-          margin={{ top: 16, right: 24, left: 48, bottom: 8 }}
+          margin={{ top: 16, right: 16, left: 80, bottom: 8 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
@@ -61,18 +80,16 @@ export function ConsumptionChart({ data, activeAreas }: Props) {
             tickFormatter={(value: string) => {
               return new Date(value).getFullYear().toString();
             }}
+            fontSize={14}
           />
           <YAxis
             tickMargin={8}
             tickLine={false}
             axisLine={{ stroke: "#d1d5db" }}
             tickFormatter={(v) => v.toLocaleString("nb-NO")}
-            label={{
-              value: "Forbruk (MWh)",
-              angle: -90,
-              position: "insideLeft",
-              style: { textAnchor: "middle", fill: "#6b7280" },
-            }}
+            width={60}
+            fontSize={14}
+            label={<YAxisLabel />}
           />
           <Tooltip
             formatter={(value: any) =>
@@ -83,8 +100,12 @@ export function ConsumptionChart({ data, activeAreas }: Props) {
                 : value
             }
             labelFormatter={(label) => `Dato: ${label}`}
+            contentStyle={{ fontSize: "14px" }}
           />
-          <Legend />
+          <Legend
+            wrapperStyle={{ fontSize: "14px", paddingTop: "8px" }}
+            iconSize={14}
+          />
           {activeAreas.map((area) => (
             <Line
               key={area}

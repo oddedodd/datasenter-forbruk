@@ -23,44 +23,34 @@ export function Dashboard({ dailySeries }: Props) {
   );
 
   return (
-    <div className="flex min-h-screen bg-emerald-50 text-slate-900">
-      <Controls
-        selectedAreas={selectedAreas}
-        onChangeAreas={setSelectedAreas}
-        startDate={startDate}
-        endDate={endDate}
-        onChangeStartDate={setStartDate}
-        onChangeEndDate={setEndDate}
-      />
-
-      <main className="flex flex-1 flex-col gap-6 px-8 py-8">
-        <header className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div className="flex min-h-screen flex-col bg-red-50 text-slate-900 lg:flex-row">
+      <main className="order-1 flex flex-1 flex-col gap-4 px-4 py-4 sm:gap-6 sm:px-6 md:px-8 md:py-8 lg:order-2">
+        <header className="flex flex-col gap-3">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Strømforbruk i datasentre
+            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Strømforbruk i datasentre pr. døgn og prisområde
             </h1>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-500 sm:text-base">
               Daglig forbruk per prisområde (kWh).
             </p>
           </div>
-
-          <div className="inline-flex gap-2 rounded-full bg-emerald-100 p-1 text-xs font-medium text-emerald-900">
-            <button className="rounded-full bg-emerald-900 px-3 py-1 text-emerald-50">
-              Forbruk pr. døgn og prisområde
-            </button>
-            <button className="rounded-full px-3 py-1 text-emerald-900/60">
-              Forbruk pr. år
-            </button>
-            <button className="rounded-full px-3 py-1 text-emerald-900/60">
-              Forbruk pr. døgn
-            </button>
-          </div>
         </header>
 
-        <section className="flex-1">
+        <section className="flex-1 overflow-x-auto">
           <ConsumptionChart data={filteredData} activeAreas={selectedAreas} />
         </section>
       </main>
+
+      <div className="order-2 lg:order-1 lg:h-screen">
+        <Controls
+          selectedAreas={selectedAreas}
+          onChangeAreas={setSelectedAreas}
+          startDate={startDate}
+          endDate={endDate}
+          onChangeStartDate={setStartDate}
+          onChangeEndDate={setEndDate}
+        />
+      </div>
     </div>
   );
 }

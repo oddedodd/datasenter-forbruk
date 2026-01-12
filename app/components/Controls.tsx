@@ -45,59 +45,59 @@ export function Controls({
   };
 
   return (
-    <div className="flex flex-col gap-8 border-r border-emerald-900/40 bg-emerald-950 px-6 py-8 text-sm text-emerald-50 md:min-w-[220px]">
-      <div className="space-y-4">
-        <div className="text-xs font-semibold uppercase tracking-wide text-emerald-200/80">
+    <div className="w-full border-b border-red-900/40 bg-red-950 px-4 py-6 text-base text-red-50 lg:w-auto lg:min-w-[220px] lg:border-b-0 lg:border-r lg:px-6 lg:py-8 lg:h-full">
+      <div className="space-y-2 lg:space-y-4">
+        <div className="text-sm font-semibold uppercase tracking-wide text-red-200/80">
           Prisområde
         </div>
-        <div className="space-y-2">
-          <label className="flex cursor-pointer items-center gap-2 text-emerald-50">
+        <div className="flex flex-wrap gap-2 lg:flex-col lg:gap-2">
+          <label className="flex cursor-pointer items-center gap-2 text-red-50">
             <input
               type="checkbox"
-              className="h-4 w-4 rounded border-emerald-400 bg-emerald-900"
+              className="h-4 w-4 rounded border-red-400 bg-red-900 accent-red-600 lg:h-5 lg:w-5"
               checked={allSelected}
               onChange={toggleAll}
             />
-            <span>Velg alt</span>
+            <span className="text-sm lg:text-base">Velg alt</span>
           </label>
           {PRICE_AREAS.map((area) => (
             <label
               key={area}
-              className="flex cursor-pointer items-center gap-2 text-emerald-50"
+              className="flex cursor-pointer items-center gap-2 text-red-50"
             >
               <input
                 type="checkbox"
-                className="h-4 w-4 rounded border-emerald-400 bg-emerald-900"
+                className="h-4 w-4 rounded border-red-400 bg-red-900 accent-red-600 lg:h-5 lg:w-5"
                 checked={selectedAreas.includes(area)}
                 onChange={() => toggleArea(area)}
               />
-              <span>{area}</span>
+              <span className="text-sm lg:text-base">{area}</span>
             </label>
           ))}
         </div>
       </div>
 
-      <div className="space-y-3">
-        <div className="text-xs font-semibold uppercase tracking-wide text-emerald-200/80">
+      <div className="mt-8 space-y-3 lg:mt-12">
+        <div className="text-sm font-semibold uppercase tracking-wide text-red-200/80">
           Bruksdøgn
         </div>
         <div className="space-y-2">
           <div className="flex flex-col gap-1">
-            <span className="text-xs text-emerald-200/80">Fra</span>
+            <span className="text-sm text-red-200/80">Fra</span>
             <input
               type="date"
               value={startDate ?? ""}
               onChange={(e) => onChangeStartDate(e.target.value || undefined)}
-              className="w-full rounded border border-emerald-700 bg-emerald-900 px-2 py-1 text-xs text-emerald-50 outline-none ring-emerald-400 focus:ring-2"
+              className="w-full rounded border border-red-700 bg-red-900 px-2 py-1.5 text-sm text-red-50 outline-none ring-red-400 focus:ring-2"
             />
           </div>
           <div className="flex flex-col gap-1">
-            <span className="text-xs text-emerald-200/80">Til</span>
+            <span className="text-sm text-red-200/80">Til</span>
             <input
               type="date"
               value={endDate ?? ""}
               onChange={(e) => onChangeEndDate(e.target.value || undefined)}
-              className="w-full rounded border border-emerald-700 bg-emerald-900 px-2 py-1 text-xs text-emerald-50 outline-none ring-emerald-400 focus:ring-2"
+              className="w-full rounded border border-red-700 bg-red-900 px-2 py-1.5 text-sm text-red-50 outline-none ring-red-400 focus:ring-2"
             />
           </div>
         </div>
