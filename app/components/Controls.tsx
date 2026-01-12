@@ -45,7 +45,10 @@ export function Controls({
   };
 
   return (
-    <div className="w-full border-b border-red-900/40 bg-red-950 px-4 py-6 text-base text-red-50 lg:w-auto lg:min-w-[220px] lg:border-b-0 lg:border-r lg:px-6 lg:py-8 lg:h-full">
+    <div
+      className="w-full border-b border-red-900/40 px-4 py-6 text-base text-red-50 lg:w-auto lg:min-w-[220px] lg:border-b-0 lg:border-r lg:px-6 lg:py-8 lg:h-full"
+      style={{ backgroundColor: "#181818" }}
+    >
       <div className="space-y-2 lg:space-y-4">
         <div className="text-sm font-semibold uppercase tracking-wide text-red-200/80">
           Prisområde

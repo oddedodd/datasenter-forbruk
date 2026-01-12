@@ -63,62 +63,77 @@ export function ConsumptionChart({ data, activeAreas }: Props) {
     );
   };
 
+  // Format date in Norwegian
+  const formatNorwegianDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("nb-NO", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
-    <div className="h-[400px] w-full rounded-xl border border-red-100 bg-white px-2 py-4 shadow-sm sm:h-[480px] sm:px-4">
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          data={data}
-          margin={{ top: 16, right: 16, left: 80, bottom: 8 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-          <XAxis
-            dataKey="date"
-            tickMargin={8}
-            tickLine={false}
-            axisLine={{ stroke: "#d1d5db" }}
-            ticks={yearTickDates}
-            tickFormatter={(value: string) => {
-              return new Date(value).getFullYear().toString();
-            }}
-            fontSize={14}
-          />
-          <YAxis
-            tickMargin={8}
-            tickLine={false}
-            axisLine={{ stroke: "#d1d5db" }}
-            tickFormatter={(v) => v.toLocaleString("nb-NO")}
-            width={60}
-            fontSize={14}
-            label={<YAxisLabel />}
-          />
-          <Tooltip
-            formatter={(value: any) =>
-              typeof value === "number"
-                ? value.toLocaleString("nb-NO", {
-                    maximumFractionDigits: 0,
-                  }) + " kWh"
-                : value
-            }
-            labelFormatter={(label) => `Dato: ${label}`}
-            contentStyle={{ fontSize: "14px" }}
-          />
-          <Legend
-            wrapperStyle={{ fontSize: "14px", paddingTop: "8px" }}
-            iconSize={14}
-          />
-          {activeAreas.map((area) => (
-            <Line
-              key={area}
-              type="monotone"
-              dataKey={area}
-              stroke={AREA_COLORS[area]}
-              dot={false}
-              strokeWidth={2}
-              isAnimationActive={false}
+    <div className="h-[400px] w-full rounded-xl border border-gray-600 bg-white px-2 py-4 shadow-sm sm:h-[480px] sm:px-4">
+      <div style={{ width: "100%", height: "100%", minWidth: 0, minHeight: 0 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={data}
+            margin={{ top: 16, right: 16, left: 80, bottom: 8 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis
+              dataKey="date"
+              tickMargin={8}
+              tickLine={false}
+              axisLine={{ stroke: "#d1d5db" }}
+              ticks={yearTickDates}
+              tickFormatter={(value: string) => {
+                return new Date(value).getFullYear().toString();
+              }}
+              fontSize={14}
             />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
+            <YAxis
+              tickMargin={8}
+              tickLine={false}
+              axisLine={{ stroke: "#d1d5db" }}
+              tickFormatter={(v) =>
+                (v / 1000).toLocaleString("nb-NO", { maximumFractionDigits: 0 })
+              }
+              width={60}
+              fontSize={14}
+              label={<YAxisLabel />}
+            />
+            <Tooltip
+              formatter={(value: any) =>
+                typeof value === "number"
+                  ? (value / 1000).toLocaleString("nb-NO", {
+                      maximumFractionDigits: 0,
+                    }) + " MWh"
+                  : value
+              }
+              labelFormatter={(label) => `Dato: ${formatNorwegianDate(label)}`}
+              contentStyle={{ fontSize: "14px" }}
+              labelStyle={{ color: "#000000" }}
+            />
+            <Legend
+              wrapperStyle={{ fontSize: "14px", paddingTop: "8px" }}
+              iconSize={14}
+            />
+            {activeAreas.map((area) => (
+              <Line
+                key={area}
+                type="monotone"
+                dataKey={area}
+                stroke={AREA_COLORS[area]}
+                dot={false}
+                strokeWidth={2}
+                isAnimationActive={false}
+              />
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }
