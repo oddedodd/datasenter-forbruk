@@ -117,12 +117,12 @@ export function ConsumptionChart({ data, activeAreas }: Props) {
               label={<YAxisLabel />}
             />
             <Tooltip
-              formatter={(value: number | string) =>
+              formatter={(value: number | string | undefined) =>
                 typeof value === "number"
                   ? (value / 1000).toLocaleString("nb-NO", {
                       maximumFractionDigits: 0,
                     }) + " MWh"
-                  : value
+                  : (value ?? "")
               }
               labelFormatter={(label) => `Dato: ${formatNorwegianDate(label)}`}
               contentStyle={{
