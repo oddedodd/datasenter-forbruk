@@ -23,25 +23,25 @@ export function Dashboard({ dailySeries }: Props) {
   );
 
   return (
-    <div className="flex min-h-screen flex-col lg:flex-row" style={{ backgroundColor: '#121417', color: '#E5E7EB' }}>
+    <div className="flex min-h-screen flex-col bg-background text-foreground lg:flex-row">
       <main className="order-1 flex flex-1 flex-col gap-4 px-4 py-4 sm:gap-6 sm:px-6 md:px-8 md:py-8 lg:order-2">
         <header className="flex flex-col gap-3">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl" style={{ color: '#E5E7EB' }}>
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               Strømforbruk i datasentre pr. døgn og prisområde
             </h1>
-            <p className="mt-1 text-sm sm:text-base" style={{ color: '#E5E7EB' }}>
+            <p className="mt-1 text-sm text-foreground sm:text-base">
               Daglig forbruk per prisområde (kWh).
             </p>
           </div>
         </header>
 
-        <section className="flex-1 overflow-x-auto">
+        <section className="flex-1 overflow-x-auto" aria-label="Forbruksgraf">
           <ConsumptionChart data={filteredData} activeAreas={selectedAreas} />
         </section>
       </main>
 
-      <div className="order-2 lg:order-1 lg:h-screen">
+      <aside className="order-2 lg:order-1 lg:h-screen" aria-label="Filterkontroller">
         <Controls
           selectedAreas={selectedAreas}
           onChangeAreas={setSelectedAreas}
@@ -50,7 +50,7 @@ export function Dashboard({ dailySeries }: Props) {
           onChangeStartDate={setStartDate}
           onChangeEndDate={setEndDate}
         />
-      </div>
+      </aside>
     </div>
   );
 }

@@ -12,11 +12,10 @@ export function buildDailyAreaSeries(rows: DataRow[]): DailyAreaData[] {
       byDate.set(key, entry);
     }
 
-    if (row.priceArea in entry) {
-      // @ts-expect-error dynamic index
-      entry[row.priceArea] += row.volumeKwh;
+    const currentValue = entry[row.priceArea];
+    if (typeof currentValue === "number") {
+      entry[row.priceArea] = currentValue + row.volumeKwh;
     } else {
-      // @ts-expect-error dynamic index
       entry[row.priceArea] = row.volumeKwh;
     }
   }

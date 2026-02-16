@@ -27,8 +27,10 @@ export async function loadConsumptionData(): Promise<DataRow[]> {
   });
 
   if (parsed.errors.length) {
-    // In a real app you might log these
-    // console.error(parsed.errors);
+    console.warn(
+      `CSV parsing warnings (${parsed.errors.length} issues):`,
+      parsed.errors.slice(0, 5).map((e) => e.message)
+    );
   }
 
   const rows: DataRow[] = (parsed.data || []).map((row) => {

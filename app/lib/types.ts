@@ -14,6 +14,8 @@ export interface DataRow {
   meterPointCount: number;
 }
 
+export type PriceAreaKey = "NO1" | "NO2" | "NO3" | "NO4" | "NO5";
+
 export interface DailyAreaData {
   date: string; // ISO string
   NO1?: number;
@@ -21,5 +23,6 @@ export interface DailyAreaData {
   NO3?: number;
   NO4?: number;
   NO5?: number;
+  [key: string]: string | number | undefined; // Index signature for dynamic access
 }
 

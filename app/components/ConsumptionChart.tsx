@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import {
   CartesianGrid,
   Legend,
@@ -21,64 +22,70 @@ const AREA_COLORS: Record<PriceArea, string> = {
   NO5: "#5AC8FA",
 };
 
+interface ViewBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+// Custom Y-axis label component - moved outside to avoid recreation on each render
+function YAxisLabel({ viewBox }: { viewBox?: ViewBox }) {
+  if (!viewBox) return null;
+  return (
+    <text
+      x={viewBox.x - 45}
+      y={viewBox.y + viewBox.height / 2}
+      fill="#9AA3AD"
+      fontSize={14}
+      textAnchor="middle"
+      transform={`rotate(-90 ${viewBox.x - 45} ${viewBox.y + viewBox.height / 2})`}
+    >
+      Forbruk (MWh)
+    </text>
+  );
+}
+
+// Format date in Norwegian
+function formatNorwegianDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("nb-NO", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 interface Props {
   data: DailyAreaData[];
   activeAreas: PriceArea[];
 }
 
 export function ConsumptionChart({ data, activeAreas }: Props) {
-  // Create an array of dates where year changes occur - these will be our tick positions
-  const yearTickDates: string[] = [];
-  data.forEach((item, index) => {
-    if (index === 0) {
-      yearTickDates.push(item.date);
-    } else {
-      const currentYear = new Date(item.date).getFullYear();
-      const previousYear = new Date(data[index - 1].date).getFullYear();
-      if (currentYear !== previousYear) {
-        yearTickDates.push(item.date);
+  // Memoize year tick dates calculation to avoid recalculating on every render
+  const yearTickDates = useMemo(() => {
+    const dates: string[] = [];
+    data.forEach((item, index) => {
+      if (index === 0) {
+        dates.push(item.date);
+      } else {
+        const currentYear = new Date(item.date).getFullYear();
+        const previousYear = new Date(data[index - 1].date).getFullYear();
+        if (currentYear !== previousYear) {
+          dates.push(item.date);
+        }
       }
-    }
-  });
-
-  // Create a set for quick lookup
-  const yearChangeDates = new Set(yearTickDates);
-
-  // Custom Y-axis label component
-  const YAxisLabel = ({ viewBox }: any) => {
-    if (!viewBox) return null;
-    return (
-      <text
-        x={viewBox.x - 45}
-        y={viewBox.y + viewBox.height / 2}
-        fill="#9AA3AD"
-        fontSize={14}
-        textAnchor="middle"
-        transform={`rotate(-90 ${viewBox.x - 45} ${
-          viewBox.y + viewBox.height / 2
-        })`}
-      >
-        Forbruk (MWh)
-      </text>
-    );
-  };
-
-  // Format date in Norwegian
-  const formatNorwegianDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("nb-NO", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
     });
-  };
+    return dates;
+  }, [data]);
 
   return (
     <div
-      className="h-[400px] w-full rounded-xl border px-2 py-4 shadow-sm sm:h-[480px] sm:px-4"
-      style={{ backgroundColor: "#1A1D22", borderColor: "#2A2F36" }}
+      className="h-[400px] w-full rounded-xl border border-border bg-background-secondary px-2 py-4 shadow-sm sm:h-[480px] sm:px-4"
+      role="img"
+      aria-label="Linjediagram som viser strømforbruk i datasentre over tid for valgte prisområder"
     >
-      <div style={{ width: "100%", height: "100%", minWidth: 0, minHeight: 0 }}>
+      <div className="h-full w-full min-h-0 min-w-0">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={data}
@@ -110,7 +117,7 @@ export function ConsumptionChart({ data, activeAreas }: Props) {
               label={<YAxisLabel />}
             />
             <Tooltip
-              formatter={(value: any) =>
+              formatter={(value: number | string) =>
                 typeof value === "number"
                   ? (value / 1000).toLocaleString("nb-NO", {
                       maximumFractionDigits: 0,
