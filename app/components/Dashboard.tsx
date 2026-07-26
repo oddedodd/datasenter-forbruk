@@ -28,7 +28,7 @@ export function Dashboard({ dailySeries }: Props) {
         <header className="flex flex-col gap-3">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Strømforbruk i datasentre pr. døgn og prisområde
+              Strømforbruk i datasentre pr. døgn og prisområde - TEST REDEPLOY
             </h1>
             <p className="mt-1 text-sm text-foreground sm:text-base">
               Daglig forbruk per prisområde (kWh).
